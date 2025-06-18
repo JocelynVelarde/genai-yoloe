@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 mobileclip_blt.ts.73ce4b95acec4c17ab4612648956df27.partial
 yoloe-11l-seg.pt
+yoloe-11l-seg-pf.pt
+mobileclip_blt.ts
 # C extensions
 *.so
 
