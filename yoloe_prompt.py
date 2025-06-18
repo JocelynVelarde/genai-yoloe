@@ -1,17 +1,18 @@
 from ultralytics import YOLOE
-import streamlit as st 
+from PIL import Image
+import numpy as np
 
-def detect_classes(class_names, image_path): 
-    # Initialize a YOLOE model
-    model = YOLOE("yoloe-11l-seg.pt")  # or select yoloe-11s/m-seg.pt for different sizes
-    # test_classes = ["cat", "dog"]
-    
-    # Set text prompt to detect person and bus. You only need to do this once after you load the model.
-    model.set_classes(class_names, model.get_text_pe(class_names))
+def detect_classes(class_names, image_file):
+    # Ensure class_names is a list
+    if isinstance(class_names, str):
+        class_list = [c.strip() for c in class_names.split(",") if c.strip()]
+    else:
+        class_list = class_names
 
-    # Run detection on the given image
-    results = model.predict(image_path)
+    # Convert uploaded file to PIL Image
+    image = Image.open(image_file).convert("RGB")
 
-    # Show results
-    #st.image()
+    model = YOLOE("yoloe-11l-seg.pt")
+    model.set_classes(class_list, model.get_text_pe(class_list))
+    results = model.predict(image)
     return results[0].plot()
